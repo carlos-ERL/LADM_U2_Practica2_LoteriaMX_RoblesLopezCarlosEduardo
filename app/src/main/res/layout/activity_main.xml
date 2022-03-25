@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="20dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/CartaAnterior"
+        android:text="CARTA ANTERIOR"
+        android:textAlignment="center"
+        android:textSize="24sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/CartaAnterior"
+        android:id="@+id/nombreCarta"
+        android:text="Carta:"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+
+    <ImageView
+        android:id="@+id/CartaActual"
+        android:layout_width="249dp"
+        android:layout_height="345dp"
+        android:layout_below="@+id/nombreCarta"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/tablaloteria"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CartaActual"
+        android:layout_marginTop="5dp"
+        android:text="Iniciar"
+        android:id="@+id/btnIniciar"
+        android:paddingVertical="13dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnIniciar"
+        android:text="Cartas faltantes"
+        android:paddingVertical="13dp"
+        android:id="@+id/btnFaltantes"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnFaltantes"
+        android:text="Reiniciar juego"
+        android:paddingVertical="13dp"
+        android:id="@+id/btnReiniciar"
+        />
+
+</RelativeLayout>
