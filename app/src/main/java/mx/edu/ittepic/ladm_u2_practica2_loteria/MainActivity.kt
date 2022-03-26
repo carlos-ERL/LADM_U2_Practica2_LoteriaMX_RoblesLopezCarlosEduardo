@@ -2,10 +2,17 @@ package mx.edu.ittepic.ladm_u2_practica2_loteria
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import kotlinx.coroutines.CoroutineScope
+import mx.edu.ittepic.ladm_u2_practica2_loteria.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lateinit var binding: ActivityMainBinding
+
+        lateinit var globalscope: CoroutineScope
+        lateinit var baraja: CartaLoteria
         var falt=0
 
         var imagenesCartas = arrayOf(
@@ -75,62 +82,42 @@ class MainActivity : AppCompatActivity() {
             R.raw.lachalupa, R.raw.elpino, R.raw.elpescado, R.raw.lapalma, R.raw.lamaceta, R.raw.elarpa,
             R.raw.larana)
 
-        var arregloPos = arrayOf(
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-            21,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
-            28,
-            29,
-            30,
-            31,
-            32,
-            33,
-            34,
-            35,
-            36,
-            37,
-            38,
-            39,
-            40,
-            41,
-            42,
-            43,
-            44,
-            45,
-            46,
-            47,
-            48,
-            49,
-            50,
-            51,
-            52,
-            53
+        var arregloPos = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+            43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53
         )
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        var revHilo=Hilo(this,R.raw.faltantes)
+
+        revHilo.start()
+        binding.btnFaltantes.visibility = View.GONE
+        binding.btnReiniciar.visibility = View.GONE
+
+        binding.btnIniciar.setOnClickListener {
+            binding.btnIniciar.visibility = View.GONE
+            binding.btnGanador.visibility = View.VISIBLE
+            baraja= CartaLoteria(this,binding.CartaActual,imagenesCartas,sonidos)
+            arregloPos= baraja.mezclar(arregloPos)
+            baraja.correr(arregloPos)
+            revHilo.corre()
+        }
+        binding.btnGanador.setOnClickListener {
+            binding.btnFaltantes.visibility = View.VISIBLE
+            baraja.parar()
+        }
+        binding.btnFaltantes.setOnClickListener {
+            binding.btnFaltantes.visibility = View.GONE
+            binding.btnGanador.visibility = View.GONE
+            binding.btnReiniciar.visibility = View.VISIBLE
+            revHilo.cambio()
+            baraja.corroborarCartas(arregloPos)
+        }
+        binding.btnReiniciar.setOnClickListener {
+            baraja.terminar()
+            binding.btnIniciar.visibility = View.VISIBLE
+            binding.btnReiniciar.visibility = View.GONE
+            binding.CartaActual.setImageResource(R.drawable.tablaloteria)
+        }
     }
 }
